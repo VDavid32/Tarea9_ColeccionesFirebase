@@ -134,7 +134,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           SizedBox(height: 30),
 
-                          // Email TextField
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 20.0),
@@ -185,7 +184,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           SizedBox(height: 10),
 
-                          // Password TextField
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 20.0),
@@ -244,7 +242,6 @@ class _LoginPageState extends State<LoginPage> {
 
                           SizedBox(height: 20),
 
-                          // Botón de ingresar
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 20.0),
@@ -280,7 +277,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           SizedBox(height: 20),
 
-                          // Texto de registro
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
