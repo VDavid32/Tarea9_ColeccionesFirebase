@@ -1,11 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_clase/auth/loginPage.dart';
 import 'package:firebase_clase/main.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomeDias extends StatelessWidget {
   const HomeDias({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final storage = GetStorage();
+    final userEmail = storage.read('userEmail') ?? '';
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber,
@@ -19,7 +25,13 @@ class HomeDias extends StatelessWidget {
         padding: EdgeInsets.all(20.0),
         child: Column(
           children: [
-            SizedBox(height: 250),
+            Center(
+              child: Text(
+                'Bienvenido $userEmail',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -27,7 +39,9 @@ class HomeDias extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage(dia: 'Lunes',)),
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(dia: 'Lunes'),
+                      ),
                     );
                   },
                   style: ButtonStyle(
@@ -47,7 +61,9 @@ class HomeDias extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage(dia: 'Martes',)),
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(dia: 'Martes'),
+                      ),
                     );
                   },
                   style: ButtonStyle(
@@ -68,7 +84,9 @@ class HomeDias extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage(dia: 'Miercoles',)),
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(dia: 'Miercoles'),
+                      ),
                     );
                   },
                   style: ButtonStyle(
@@ -93,7 +111,9 @@ class HomeDias extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage(dia: 'Jueves',)),
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(dia: 'Jueves'),
+                      ),
                     );
                   },
                   style: ButtonStyle(
@@ -114,7 +134,9 @@ class HomeDias extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage(dia: 'Viernes',)),
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(dia: 'Viernes'),
+                      ),
                     );
                   },
                   style: ButtonStyle(
@@ -135,7 +157,9 @@ class HomeDias extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage(dia: 'Sabado',)),
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(dia: 'Sabado'),
+                      ),
                     );
                   },
                   style: ButtonStyle(
@@ -160,7 +184,9 @@ class HomeDias extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage(dia: 'Domingo',)),
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(dia: 'Domingo'),
+                      ),
                     );
                   },
                   style: ButtonStyle(
@@ -175,6 +201,45 @@ class HomeDias extends StatelessWidget {
                     ),
                   ),
                   child: Text('Domingo'),
+                ),
+              ],
+            ),
+            SizedBox(height: 50,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                OutlinedButton.icon(
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    final storage = GetStorage();
+                    storage.erase();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
+                      ),
+                      (Route<dynamic> route) => false,
+                    );
+                  },
+                  icon: Icon(
+                    Icons.lock,
+                    color: Colors.white,
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.red),
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    side: MaterialStatePropertyAll(
+                      BorderSide(color: Colors.grey, width: 2),
+                    ),
+                  ),
+                  label: const Text(
+                    'Cerrar sesión',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             ),

@@ -1,9 +1,12 @@
 import 'package:firebase_clase/ListaProductosTab.dart';
 import 'package:firebase_clase/agregar_productos_tab.dart';
+import 'package:firebase_clase/auth/loginPage.dart';
 import 'package:firebase_clase/screen_ViewDays.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'package:get/route_manager.dart';
+import 'package:get_storage/get_storage.dart';
+import 'firebase/firebase_options.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 void main() async {
@@ -17,21 +20,26 @@ void main() async {
 
   print(token);
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final storage = GetStorage();
+  
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final hayData = storage.read('logueado') ?? false;
+    return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const HomeDias(),
+      home: hayData ? 
+      HomeDias()
+      : LoginPage(),
     );
   }
 }
@@ -39,6 +47,7 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   final String dia;
   const HomePage({super.key, required this.dia});
+  
 
   @override
   Widget build(BuildContext context) {
